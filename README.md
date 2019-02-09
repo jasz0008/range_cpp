@@ -3,15 +3,15 @@ C++ implementation of Python range function
 
 ### Build
 ```
-git clone https://github.com/jasz0008/range-cpp.git
-mkdir -p range-cpp/_build % cd range-cpp/_build
+git clone https://github.com/jasz0008/range_cpp.git
+mkdir -p range_cpp/_build % cd range_cpp/_build
 cmake -G "Unix Makefiles" ..
 cmake --build .
 ```
 
 ### Usage
 ```cpp
-#include <rangecpp/range.hpp>
+#include <range_cpp/range.hpp>
 #include <vector>
 ...
 
