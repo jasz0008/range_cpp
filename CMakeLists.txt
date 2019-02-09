@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(range-cpp
+project(range_cpp
     VERSION 0.1
     DESCRIPTION "C++ implementation of Python range function"
-    HOMEPAGE_URL https://github.com/jasz0008/range-cpp
+    HOMEPAGE_URL https://github.com/jasz0008/range_cpp
     LANGUAGES CXX
 )
 
 # Library
-add_library(range-cpp)
-target_compile_options(range-cpp
+add_library(range_cpp)
+target_compile_options(range_cpp
     PRIVATE
         $<$<IN_LIST:$<CXX_COMPILER_ID>,"Clang;GNU">:
             -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Werror
@@ -17,21 +17,21 @@ target_compile_options(range-cpp
         $<$<CXX_COMPILER_ID:Clang>:-Weverything -Weffc++>
         $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
 )
-#target_include_directories(range-cpp INTERFACE include/range-cpp)
+#target_include_directories(range_cpp INTERFACE include/range_cpp)
 # TODO: Export headers
-#target_link_options(range-cpp
+#target_link_options(range_cpp
 #    PRIVATE
 #        $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
 #)
-target_sources(range-cpp PRIVATE src/range.cpp)
-set_target_properties(range-cpp PROPERTIES
+target_sources(range_cpp PRIVATE src/range.cpp)
+set_target_properties(range_cpp PROPERTIES
     CXX_EXTENSIONS NO
     CXX_STANDARD 11
     CXX_STANDARD_REQUIRED YES
 )
 install(
-    TARGETS range-cpp
-    EXPORT range-cpp
+    TARGETS range_cpp
+    EXPORT range_cpp
     ARCHIVE
         COMPONENT Library
         DESTINATION lib
@@ -45,7 +45,7 @@ install(
         COMPONENT Library
         DESTINATION bin
 )
-install(EXPORT range-cpp DESTINATION lib/cmake/range-cpp-${PROJECT_VERSION})
+install(EXPORT range_cpp DESTINATION lib/cmake/range_cpp-${PROJECT_VERSION})
 
 # Get Google Test
 file(READ googletest.sha512 googletest_sha512)
@@ -63,8 +63,8 @@ FetchContent_MakeAvailable(googletest)
 #)
 
 # Tests
-#add_executable(range-cpp-tests)
-#target_compile_options(range-cpp-tests
+#add_executable(range_cpp-tests)
+#target_compile_options(range_cpp-tests
 #    PRIVATE
 #        $<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:
 #            -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
@@ -72,23 +72,23 @@ FetchContent_MakeAvailable(googletest)
 #        $<$<CXX_COMPILER_ID:Clang>:-Weverything -Weffc++>
 #        $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
 #)
-#target_sources(range-cpp-tests PRIVATE tests.cpp)
-#target_link_libraries(range-cpp-tests
+#target_sources(range_cpp-tests PRIVATE tests.cpp)
+#target_link_libraries(range_cpp-tests
 #    PRIVATE
-#        range-cpp
+#        range_cpp
 #        gtest_main
 #)
-#target_link_options(range-cpp-tests
+#target_link_options(range_cpp-tests
 #    PRIVATE
 #        $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
 #)
-#set_target_properties(range-cpp-tests PROPERTIES
+#set_target_properties(range_cpp-tests PROPERTIES
 #    CXX_EXTENSIONS NO
 #    CXX_STANDARD 11
 #    CXX_STANDARD_REQUIRED YES
 #)
 #install(
-#    TARGETS range-cpp-tests
+#    TARGETS range_cpp-tests
 #    RUNTIME
 #        COMPONENT Tests
 #        DESTINATION bin

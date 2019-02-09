@@ -1,9 +1,9 @@
-#ifndef RANGECPP_RANGE_HPP
-#define RANGECPP_RANGE_HPP
+#ifndef RANGE_CPP_RANGE_HPP
+#define RANGE_CPP_RANGE_HPP
 
 #include <vector>
 
-namespace rangecpp {
+namespace range_cpp {
 
 std::vector<size_t> range(size_t stop);
 
