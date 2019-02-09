@@ -1,4 +1,4 @@
-# range-cpp
+# range_cpp
 C++ implementation of Python range function
 
 ### Build
