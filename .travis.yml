@@ -1,7 +1,37 @@
+dist: xenial
+sudo: false
 language: cpp
-compiler:
-    - clang
-#    - gcc
+
+addons:
+  apt:
+    packages:
+      #- ninja-build
+      - g++-6
+    sources:
+      - ubuntu-toolchain-r-test
+
+before_install:
+  - pip install --user cpp-coveralls
+
+script:
+  # Pass COVERAGE flag to enable coverage (disabled by default)
+  - CXX=/usr/bin/g++-6 && CC=/usr/bin/gcc-6 && cmake -DRANGE_CPP_COVERAGE=1 .
+  - cmake --build .
+  # Need to run the tests to get them included in the coverage report
+  - ./range_cpp_tests 
+
+after_success:
+  # Exclude gtest and CMake from coverage
+  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
+
+#os:
+#  - linux
+#  - osx
+#
+#compiler:
+#  - clang
+#  - gcc
+#
 #matrix:
 #  include:
 #    # works on Precise and Trusty

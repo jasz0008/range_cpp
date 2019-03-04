@@ -1,56 +1,54 @@
-#include "range.hpp"
+#include <range_cpp/range.hpp>
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <numeric>
 #include <stdexcept>
 
-namespace rangecpp {
+namespace range_cpp {
 
-struct Status {
-    bool ok;
-    const char* message;
-};
+static std::vector<int> empty{};
 
-static std::vector<size_t> sequentiallyIncreasingRange(const size_t start,
-                                                       const size_t stop)
+static std::vector<int> rangeImpl(const int start,
+                                  const int stop,
+                                  const int step = 1)
 {
-    assert(stop > start);
-    std::vector<size_t> values(stop);
-    std::iota(std::begin(values), std::end(values), start);
+    const size_t distance = std::abs(stop - start);
+    const size_t size = ((distance / std::abs(step)) + (distance % std::abs(step)));
+    std::vector<int> values(size);
+    std::generate(std::begin(values), std::end(values), 
+                  [n = (start - step), step] () mutable { return n += step; });
     return values;
 }
 
-static Status validate(const size_t start, const size_t stop, const int step)
+std::vector<int> range(const int stop)
 {
-    assert(stop > start);
-    assert((start + step) >= stop);
-    // Negative step
-    // Start > stop
-    // Start or stop near size_t max/min
-    // Large step
-    // Step over stop
-}
-
-std::vector<size_t> range(const size_t stop)
-{
-    return sequentiallyIncreasingRange(0, stop);
-}
-
-std::vector<size_t> range(const size_t start, const size_t stop, const int step)
-{
-    const Status status = validate(start, stop, step);
-    if (!status.ok) {
-        throw std::logic_error(status.message);
+    if (stop == 0) { // start == stop
+        return empty;
     }
 
-    if (step == 1) {
-        return sequentiallyIncreasingRange(start, stop);
-    }
-
-    std::vector<size_t> values((stop - start), start);
-    std::accumulate(std::begin(values), std::end(values), step);
-
-    return values;
+    return rangeImpl(0, stop);
 }
 
-} // namespace rangecpp
+std::vector<int> range(const int start, const int stop, const int step)
+{
+    // Handle invalid step
+    if (step == 0) {
+        throw std::logic_error("range_cpp::range(): step must not be zero");
+    }
+
+    // Handle trivial cases
+    if (start == stop) {
+        return empty;
+    }
+    if ((start > stop) && (step > 0)) {
+        return empty;
+    }
+    if ((start < stop) && (step < 0)) {
+        return empty;
+    }
+
+    return rangeImpl(start, stop, step);
+}
+
+} // namespace range_cpp
