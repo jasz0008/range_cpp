@@ -31,10 +31,17 @@ target_link_libraries(range_cpp_tests
         range_cpp
         gtest
 )
-target_link_options(range_cpp_tests
-    PRIVATE
-        $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
-)
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+    target_link_options(range_cpp_tests
+        PRIVATE
+            $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
+    )
+else()
+    target_link_libraries(range_cpp_tests
+        PRIVATE
+            $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
+    )
+endif()
 set_target_properties(range_cpp_tests PROPERTIES
     CXX_EXTENSIONS NO
     CXX_STANDARD 11

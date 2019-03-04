@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.5.1)
 
 project(range_cpp 
     LANGUAGES CXX
-    VERSION 0.1)
+    VERSION 0.1
+)
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.9.6)
     set(PROJECT_DESCRIPTION "C++ implementation of Python range function")
 endif()

@@ -15,10 +15,17 @@ include(GenerateExportHeader)
 generate_export_header(range_cpp
     EXPORT_FILE_NAME range_cpp_exports.hxx
 )
-target_link_options(range_cpp
-    PRIVATE
-        $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
-)
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+    target_link_options(range_cpp
+        PRIVATE
+            $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
+    )
+else()
+    target_link_libraries(range_cpp
+        PRIVATE
+            $<$<CXX_COMPILER_ID:MSVC>:/Wall /permissive /WX>
+    )
+endif()
 target_sources(range_cpp PRIVATE src/range.cpp)
 set_target_properties(range_cpp PROPERTIES
     #CXX_CLANG_TIDY
